@@ -18,7 +18,7 @@ function()
             end
         end
         
-        
+        -- This bit crashes it -->
 -- Loop until reaches Reset point        
         while count_wa_mecanic_4 < count_till_reset do
             if time < interval then
