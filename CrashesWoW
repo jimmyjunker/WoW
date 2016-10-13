@@ -1,0 +1,52 @@
+function()
+    local colour = "|cFFFFFFFF"
+    local name = "Breath: "
+    local remaining = 0
+    if WA_mecanic_time_4 then
+        local time = GetTime() - WA_mecanic_time_4
+        local start = 5 -- Time till first cast
+        local interval = 15 + start -- Time between casts
+        local count_wa_mecanic_4 = 0 -- Start (so that you can get time till first cast)
+        local count_till_reset = 3 -- How many cycles before 
+        local reset_point = 1 -- Should it start from the begining 0=yes 1=no 2= Phase buffer
+        
+ --Initial cast       
+        if count_wa_mecanic_4 == 0 then 
+            if time < start then
+                remaining = start - time
+                count_wa_mecanic_4 = count_wa_mecanic_4 +1  
+            end
+        end
+        
+        
+-- Loop until reaches Reset point        
+        while count_wa_mecanic_4 < count_till_reset do
+            if time < interval then
+                remaining = interval - time
+                elseif time > interval then
+                WA_mecanic_time_4 = GetTime()
+               count_wa_mecanic_4 = count_wa_mecanic_4+1
+            end 
+        end
+        
+        
+        
+        
+        
+ -- Sets colours of the        
+        if remaining <= 0 then
+            colour =  "|cFF66FF99"
+        elseif remaining < 10 then
+            colour = "|cFFFF0000"
+        end
+    end
+    
+    --pad clock
+    local clock = math.ceil(remaining-.5) .. "s"
+    clock = string.rep(" ", 3 - string.len(clock)) .. clock
+    
+    --pad entire string for alignment
+    local ret =  colour .. name .. clock
+    ret = string.rep(" ", 27 - string.len(ret) ) .. ret
+    return ret
+end
